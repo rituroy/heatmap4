@@ -1,0 +1,97 @@
+---
+title: "heatmap4"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{heatmap4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Introduction
+A heatmap is a false color image (image(t(x))) with a dendrogram added to the top and left side. Typically, reordering of the rows and columns according to some set of values (row or column means) within the restrictions imposed by the dendrogram is carried out.
+
+This package takes the original heatmap function and reduces the argument complexity.
+
+
+## 2. Loading heatmap4 package
+
+```{r}
+library(heatmap4)
+```
+
+
+## 3. Example Data
+
+We will use the data sets genomDat, phen, and anno to map and generate column and row annotations.
+
+The data set genomDat is 2x2 matrix with gene expression data (subjects, genes). The phen (phenotype) data set displays the clinical information of the subject. The anno data set consists of gene mapping information.
+
+```{r}
+# Sample portion of genomDat (heatmap examples will use [1:20,1:20])
+genomDat[1:4,1:6]
+
+# Sample portion of phen (heatmap examples will use [1:39])
+phen[1:3,]
+
+# Sample portion of anno (heatmap examples will use [1:22])
+anno[1:4,]
+
+```
+
+
+## 4. Generate Heatmap
+
+```{r}
+# Default heatmap
+generate_heatmap(genomDat)
+```
+
+
+```{r}
+# Heatmap with column dendrogram
+generate_heatmap(genomDat, col_dend = TRUE)
+```
+
+```{r}
+# Heatmap with column dendrogram, column annotations
+generate_heatmap(genomDat, col_info = phen, col_dend = TRUE, col_anno = TRUE)
+```
+
+```{r}
+# Heatmap with column dendrogram, column annotations, column label
+generate_heatmap(genomDat, col_lab = TRUE, col_info = phen,
+col_anno = TRUE, col_dend = TRUE, plot_info = list(margins = c(2,2)))
+```
+
+```{r}
+# Heatmap with all annotations
+generate_heatmap(genomDat, col_lab = TRUE, row_lab = TRUE, col_anno = TRUE,
+row_anno = TRUE, col_info = phen, row_info = anno, col_dend = TRUE,
+row_dend = TRUE, plot_info = list(margins = c(5,5)))
+```
+
+## 5. More
+```{r}
+# Add a title
+generate_heatmap(genomDat, col_lab = TRUE, row_lab = TRUE, col_anno = TRUE,
+row_anno = TRUE, col_info = phen, row_info = anno, col_dend = TRUE,
+row_dend = TRUE, h_title = "Genome Heatmap", plot_info = list(margins = c(5,5)))
+```
+
+```{r}
+# Change plot and annotation colors and font size
+main_plot = list("cexCol" = 1.25, "cexRow" = 1.5, "cexRowSide" = 1, "cexColSide" = 1 )
+cate_color = list(age_year = list(color = c("light blue", "blue")), Chrom = list(color = c("palegreen",
+"darkgreen")))
+
+generate_heatmap(genomDat, col_lab = TRUE, row_lab = TRUE, col_anno = TRUE, row_anno = TRUE,
+col_info = phen, row_info = anno, col_dend = TRUE, row_dend = TRUE,
+col_anno_var = c("age_year","sex"), row_anno_var = c("Chrom"), h_title = "Genome Heatmap",
+plot_info = main_plot, heatmap_color =c("light blue","purple","pink"), col_var_info = cate_color,
+row_var_info = cate_color)
+```
