@@ -2,9 +2,9 @@
 title: "heatmap4"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{heatmap4}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %VignetteIndexEntry{heatmap4}
+  %VignetteEngine{knitr::rmarkdown}
+  %VignetteEncoding{UTF-8}
 ---
 
 
